@@ -348,11 +348,12 @@ Splite.new name:"ねこ"-> cat;
 cat.walk 10; 
 \end{lstlisting}
 
-\subsection{字句解析のルール}
+\subsection{字句のルール}
 %ここにpeg.jsの字句解析のルールの記述方法の説明とかを書く
+表\ref{tab:table04}に示されたルールの記述方法について説明を行う．「"文字"」は，その文字を表す．「[文字列の集合]」は，文字列の集合の中の任意の一文字を表す．また，「要素\ast」は，要素が0以上の繰り返しであることを，「要素+」は，1以上の繰り返しであることを合わす．
 
 \begin{table}[H]
- \caption{字句解析のルール一覧}
+ \caption{字句のルール一覧}
  \label{tab:table04}
  \centering
   \begin{tabular}{cc}
@@ -362,17 +363,24 @@ cat.walk 10;
    識別子 & [a-z][a-zA-Z0-9\_]\ast \\
    クラス & [A-Z][a-zA-Z0-9\_]\ast \\
    数値 & [0-9]+ \\
-   小数点 & "." \\
+   小数点とメソッド呼び出し & "." \\
    符号 & "+" / "-" \\
    真偽値 & "true" / "false" \\
-    & \\
+   代入演算子 & "->" \\
+   パイプライン演算子 & "|>" \\
+   チルダ演算子 & "\textasciitilde" \\
+   算術演算子 & "+" / "-" / "\ast" / "/" / "\%" \\
+   比較演算子 & "=" / ">" / "<" / ">=" / "<=" \\
+   論理演算子 & "and" / "or" \\
+   引数 & ":" \\
+   区切り & "," \\
+   文の終端 & ";" \\
    \hline
   \end{tabular}
 \end{table}
 
-\subsection{構文解析のルール}
+\subsection{構文のルール}
 
-メソッドの〜を
 
 \clearpage
 
