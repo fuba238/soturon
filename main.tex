@@ -60,10 +60,13 @@
 \thispagestyle{empty} %ページスタイルの変更
 \tableofcontents %目次の作成
 \thispagestyle{empty} %ページスタイルの変更
+\clearpage %改ページ
 \listoffigures
 \thispagestyle{empty} %ページスタイルの変更
+\clearpage %改ページ
 \listoftables
 \thispagestyle{empty} %ページスタイルの変更
+\clearpage %改ページ
 \lstlistoflistings
 \clearpage %改ページ
 
@@ -345,7 +348,31 @@ Splite.new name:"ねこ"-> cat;
 cat.walk 10; 
 \end{lstlisting}
 
-\subsection{構文規則}
+\subsection{字句解析のルール}
+%ここにpeg.jsの字句解析のルールの記述方法の説明とかを書く
+
+\begin{table}[H]
+ \caption{字句解析のルール一覧}
+ \label{tab:table04}
+ \centering
+  \begin{tabular}{cc}
+   \hline
+   トークン & ルール \\
+   \hline \hline
+   識別子 & [a-z][a-zA-Z0-9\_]\ast \\
+   クラス & [A-Z][a-zA-Z0-9\_]\ast \\
+   数値 & [0-9]+ \\
+   小数点 & "." \\
+   符号 & "+" / "-" \\
+   真偽値 & "true" / "false" \\
+    & \\
+   \hline
+  \end{tabular}
+\end{table}
+
+\subsection{構文解析のルール}
+
+メソッドの〜を
 
 \clearpage
 
