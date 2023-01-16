@@ -333,7 +333,7 @@ true or false;
 関数とは，一連の処理をまとめたものを表す．関数の宣言には，ラムダ式を用いる．括弧「()」内に引数を，中括弧「\{\}」内に処理を記述する．また，returnで戻り値を指定する．関数は変数に代入することもできる．プログラム\ref{code12}に関数のプログラム例を示す．
 
 \begin{lstlisting}[caption=関数のプログラム例, label=code12]
-(a,b) => { return a + b } -> add;
+(a,b) => { return a + b; } -> add;
 {10, 20} |> add;
 \end{lstlisting}
 
@@ -348,38 +348,89 @@ Splite.new name:"ねこ"-> cat;
 cat.walk 10; 
 \end{lstlisting}
 
-\subsection{字句のルール}
+\subsection{字句解析ルール}
 %ここにpeg.jsの字句解析のルールの記述方法の説明とかを書く
-表\ref{tab:table04}に示されたルールの記述方法について説明を行う．「"文字"」は，その文字を表す．「[文字列の集合]」は，文字列の集合の中の任意の一文字を表す．また，「要素\ast」は，要素が0以上の繰り返しであることを，「要素+」は，1以上の繰り返しであることを合わす．
+表\ref{tab:table04}に字句解析のルールを示す．
+表\ref{tab:table04}に示されたルールの記述方法について説明を行う．「.」は，任意の1文字を表す．「"文字列"」は，ダブルクォートに囲われた文字列を表す．「[文字列の集合]」は，文字列の集合の中の任意の1文字を表す．また，「要素\ast」は，要素が0以上の繰り返しであることを，「要素+」は，1以上の繰り返しであることを合わす．「要素1/要素2」は，左から順番に評価していき，適合したらその値を返し，適合しなかった場合，次の評価を行う．
 
 \begin{table}[H]
- \caption{字句のルール一覧}
+ \caption{字句解析ルール一覧}
  \label{tab:table04}
  \centering
   \begin{tabular}{cc}
    \hline
    トークン & ルール \\
    \hline \hline
+   文字 & .\ast \\
    識別子 & [a-z][a-zA-Z0-9\_]\ast \\
    クラス & [A-Z][a-zA-Z0-9\_]\ast \\
-   数値 & [0-9]+ \\
-   小数点とメソッド呼び出し & "." \\
    符号 & "+" / "-" \\
+   数値(0\textasciitilde9) & [0-9] \\
+   数値(1\textasciitilde9) & [1-9] \\
+   小数点とメソッド呼び出し & "." \\
    真偽値 & "true" / "false" \\
    代入演算子 & "->" \\
    パイプライン演算子 & "|>" \\
    チルダ演算子 & "\textasciitilde" \\
+   ラムダ演算子 & "=>" \\
    算術演算子 & "+" / "-" / "\ast" / "/" / "\%" \\
    比較演算子 & "=" / ">" / "<" / ">=" / "<=" \\
    論理演算子 & "and" / "or" \\
    引数 & ":" \\
    区切り & "," \\
    文の終端 & ";" \\
+   予約語 & "return" / "break" \\
+   その他記号 & "(" / ")" / "\{" / "\}" / "[" / "]" \\
+   空白 & [ \textbackslash t\textbackslash n\textbackslash r] \\
    \hline
   \end{tabular}
 \end{table}
 
-\subsection{構文のルール}
+\subsection{構文解析ルール}
+表\ref{tab:table05}に構文解析のルールを示す．ルールは前節と同様である．
+
+\begin{table}[H]
+ \caption{構文解析ルール一覧}
+ \label{tab:table05}
+ \centering
+  \begin{tabular}{cc}
+   \hline
+   ルール名 & ルール \\
+   \hline \hline
+   プログラム & (式文";")\ast \\
+   式文 & break文/return文/代入式 \\
+   代入式 & パイプ式 代入演算子 代入先 \\
+   代入先 & 配列要素/識別子 \\
+   配列要素 & 識別子"["インデックス"]" \\
+   インデックス & 配列要素/整数/識別子 \\
+   パイプ式 & パイプ元 (パイプライン演算子 パイプ先)\ast \\
+   パイプ元 & 論理式/パイプライン引数 \\
+   パイプ先 & メソッド/識別子 \\
+   パイプライン引数 & "{"複数引数"}"/引数 \\
+   複数引数 & 引数 ("," 引数)* \\
+   引数 & キーワード引数/リテラル/識別子 \\ 
+   キーワード引数 & キーワード":"値 \\
+   値 & リテラル/識別子 \\
+   論理式 & 関係式 (論理演算子 関係式)\ast \\
+   関係式 & 加減式 (比較演算子 加減式)\ast \\
+   加減式 & 乗除式 ([+-]　乗除式)\ast \\
+   乗除式 & 要素 ([\ast/] 要素)\ast \\
+   要素 & 関数/配列/"("関係式")" /メソッド/配列要素/リテラル/識別子 \\
+   リテラル & 文字列リテラル/数値リテラル \\
+   文字列リテラル & '"'字\ast'"' \\
+   数値リテラル & 整数/浮動小数点数 \\
+   整数 & 符号?[1-9][0-9]+\ast/符号[0-9]/[0-9] \\
+   浮動小数点数 & 整数"."[0-9]+ \\
+   関数 & "("複数引数?")" "=>" 関数ブロック \\
+   配列 & "["要素(","要素)\ast"]" \\
+   メソッド & オブジェクト"."メソッド名 オプション引数? \\
+   オブジェクト & ブロック式/リテラル/クラス/識別子 \\
+   ブロック式 & "{"パイプ式"}" \\
+   break文 & "break" \\
+   return文 & "return" パイプ式 \\
+   \hline
+  \end{tabular}
+\end{table}
 
 
 \clearpage
@@ -870,7 +921,7 @@ rand -> num;
 \clearpage
 
 \section{結言}
-%背景
+%背景 
 近年の急速な情報化に伴い，2020年度から小学校ではプログラミング教育の必修化が行われた．これにより小学生でも扱いやすいビジュアルプログラミング言語が注目されている．
 代表的なビジュアルプログラミング言語に「Scratch」がある．「Scratch」は指示の書かれたブロックを並べることで視覚的にわかりやすく，直感的な操作でプログラミングができる．また，文字のタイピング量が少ない点や英単語の知識を必要としない点などから，初学者のプログラミング学習に適している．
 
@@ -898,6 +949,11 @@ rand -> num;
 \bibitem{senkou1} 内掘美幸: ``Scratchからの移行を考慮したプログラミング言語と環境の開発'', 2019年度卒業研究
 \bibitem{senkou2} 菅原直輝: ``Scratchからの移行を考慮したプログラミング言語の開発'', 2020年度卒業研究
 \bibitem{pdf1} 文部科学省，``小学校プログラミング教育の手引（第三版）'', (2020),\url{https://www.mext.go.jp/content/20200218-mxt_jogai02-100003171_002.pdf}
+\bibitem{cite1} 文部科学省，``小学校を中心としたプログラミング教育ポータル'', \url{https://www.mext.go.jp/content/20200218-mxt_jogai02-100003171_002.pdf},2022/8/23 参照
+\bibitem{cite2} 京都産業大学，``Smalltalk Syntax'', \url{http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/VisualWorks/SmalltalkSyntax/index-j.html},2019/8/21
+\bibiitem{cite3} MDN contributors, ``Promise'',\url{https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Promise},2022/10/4
+\bibiitem{cite4} まつもとゆきひろ, ``オブジェクト指向スクリプト言語 Ruby リファレンスマニュアル'',\url{https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Promise},
+
 \end{thebibliography}
 
 \end{document}
