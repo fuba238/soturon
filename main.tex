@@ -1,11 +1,13 @@
 % !TEX encoding = UTF-8 Unicode
 
 \documentclass[10pt,a4j]{ltjsarticle}
-\usepackage{url}
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{listings}
 \usepackage[subrefformat=parens]{subcaption}
+\usepackage[hyphens]{url}
+\usepackage[unicode,hidelinks,pdfusetitle]{hyperref}
+\usepackage{here}
 
 \renewcommand{\figurename}{図}
 \renewcommand{\tablename}{表}
@@ -160,7 +162,7 @@ Rubyとは，まつもとゆきひろ氏が作り上げた日本製のテキス�
 
 本言語では，シンプルな記述によるコードを読んだときに処理の内容のわかりやすさを参考にしている．
 \subsubsection{Smalltalk}
-Smalltalkとは，手続き型の純粋オブジェクト指向プログラミング言語および実行環境のことを指す．Smalltalkの特徴として，メッセージという仕組みよる文法のシンプルさが挙げられる．メッセージは，メッセージセレクターと０個以上の引数を持っており，それをレシーバに送ることで処理を返す．メッセージには，単項メッセージと二項メッセージ，キーワードメッセージの三種類の形式がある．
+Smalltalkとは，手続き型の純粋オブジェクト指向プログラミング言語および実行環境のことを指す．Smalltalkの特徴として，メッセージという仕組みよる文法のシンプルさが挙げられる．メッセージは，メッセージセレクターと0個以上の引数を持っており，それをレシーバに送ることで処理を返す．メッセージには，単項メッセージと二項メッセージ，キーワードメッセージの三種類の形式がある．
 
 プログラム\ref{smalltalk01}にメッセージのプログラム例を示す．1行目は単項メッセージで，レシーバである「10」へ「printString」というメッセージセレクターを送ることで，「10」を文字列に変換した「'10'」の生成を行う．2行目は二項メッセージで，レシーバである「10」へ「＋」というメッセージセレクターと引数「5」を送ることで，「10」に「5」を加算し，「15」の生成を行う．3行目はキーワードメッセージで，レシーバである配列「anArray」へ「at:put:」というメッセージセレクターと引数「1」と引数「10」を送ることで，配列「anArray」の1番目の要素を「10」にしている．
 
@@ -403,7 +405,7 @@ cat.walk 10;
    プログラム & プログラム規則\ast \\
    プログラム規則 & 式文";" \\
    式文 & break文/return文/代入式 \\
-   代入式 & パイプ式 代入演算子 代入先 \\
+   代入式 & パイプ式 代入演算子 代入先/パイプ式 \\
    代入先 & 配列要素/識別子 \\
    配列要素 & 識別子"["インデックス"]" \\
    インデックス & 配列要素/整数/識別子 \\
@@ -437,8 +439,6 @@ cat.walk 10;
    \hline
   \end{tabular}
 \end{table}
-
-
 \clearpage
 
 \section{ScratchとChiba-langの比較}
@@ -471,10 +471,10 @@ moveメソッドは，「スプライト名.move」でx座標の値，y座標の
 
 \begin{figure}[H]
   \centering
-  \includegraphics[height=15mm]{images/move_x_y.pdf} \\
-  \includegraphics[height=15mm]{images/move_x_y_time.pdf} \\
-  \includegraphics[height=15mm]{images/move_x.pdf} \\
-  \includegraphics[height=15mm]{images/move_y.pdf} 
+  \includegraphics[height=10mm]{images/move_x_y.pdf} \\
+  \includegraphics[height=10mm]{images/move_x_y_time.pdf} \\
+  \includegraphics[height=10mm]{images/move_x.pdf} \\
+  \includegraphics[height=10mm]{images/move_y.pdf} 
   \caption{「座標を〜にする」ブロック}
   \label{fig:move}
 \end{figure}
@@ -491,8 +491,8 @@ move\_stepメソッドは，「スプライト名.move\_step」でx座標の変�
 
 \begin{figure}[H]
   \centering
-  \includegraphics[height=15mm]{images/step_x.pdf} 
-  \includegraphics[height=15mm]{images/step_y.pdf} 
+  \includegraphics[height=10mm]{images/step_x.pdf} 
+  \includegraphics[height=10mm]{images/step_y.pdf} 
   \caption{「座標を〜ずつ変える」ブロック}
   \label{fig:step}
 \end{figure}
@@ -510,9 +510,9 @@ turnメソッドは，「スプライト名.turn」で角度を変更するこ�
 
 \begin{figure}[H]
   \centering
-  \includegraphics[height=15mm]{images/turn_right.pdf} 
-  \includegraphics[height=15mm]{images/turn_left.pdf} 
-  \includegraphics[height=15mm]{images/turn.pdf}
+  \includegraphics[height=10mm]{images/turn_right.pdf} 
+  \includegraphics[height=10mm]{images/turn_left.pdf} 
+  \includegraphics[height=10mm]{images/turn.pdf}
   \caption{「〜度回す」，「〜度に向ける」ブロック}
   \label{fig:turn}
 \end{figure}
@@ -530,7 +530,7 @@ touchメソッドとは，二つのオブジェクト同士が接触している
 
 \begin{figure}[H]
   \centering
-  \includegraphics[height=15mm]{images/return.pdf}
+  \includegraphics[height=10mm]{images/return.pdf}
   \caption{「もし端に着いたら，跳ね返る」ブロック}
   \label{fig:return}
 \end{figure}
@@ -550,8 +550,8 @@ xメソッドとyメソッドは，「スプライト名.x」と「スプライ�
 
 \begin{figure}[H]
   \centering
-  \includegraphics[height=15mm]{images/x.pdf} 
-  \includegraphics[height=15mm]{images/y.pdf} 
+  \includegraphics[height=10mm]{images/x.pdf} 
+  \includegraphics[height=10mm]{images/y.pdf} 
   \caption{「座標」ブロック}
   \label{fig:xy}
 \end{figure}
@@ -571,10 +571,10 @@ sayメソッドは，「スプライト名.say」で文字列のデータを与�
 
 \begin{figure}[H]
   \centering
-  \includegraphics[height=15mm]{images/say.pdf} \\
-  \includegraphics[height=15mm]{images/say_time.pdf} \\
-  \includegraphics[height=15mm]{images/think.pdf} \\
-  \includegraphics[height=15mm]{images/think_time.pdf} 
+  \includegraphics[height=10mm]{images/say.pdf} \\
+  \includegraphics[height=10mm]{images/say_time.pdf} \\
+  \includegraphics[height=10mm]{images/think.pdf} \\
+  \includegraphics[height=10mm]{images/think_time.pdf} 
   \caption{「〜と言う」「〜と考える」ブロック}
   \label{fig:say}
 \end{figure}
@@ -595,8 +595,8 @@ cat.say "";
 
 \begin{figure}[H]
   \centering
-  \includegraphics[height=15mm]{images/wear.pdf} \\
-  \includegraphics[height=15mm]{images/next_wear.pdf} 
+  \includegraphics[height=10mm]{images/wear.pdf} \\
+  \includegraphics[height=10mm]{images/next_wear.pdf} 
   \caption{「コスチュームを〜にする」ブロック}
   \label{fig:costume}
 \end{figure}
@@ -616,8 +616,8 @@ cat.next_costume;
 
 \begin{figure}[H]
   \centering
-  \includegraphics[height=15mm]{images/set.pdf} \\
-  \includegraphics[height=15mm]{images/next_set.pdf} 
+  \includegraphics[height=10mm]{images/set.pdf} \\
+  \includegraphics[height=10mm]{images/next_set.pdf} 
   \caption{「背景を〜にする」ブロック}
   \label{fig:background}
 \end{figure}
@@ -635,7 +635,7 @@ sizeメソッドは，「スプライト名.size」で変更する大きさを�
 
 \begin{figure}[H]
   \centering
-  \includegraphics[height=15mm]{images/size.pdf}
+  \includegraphics[height=10mm]{images/size.pdf}
   \caption{「大きさを〜\%にする」ブロック}
   \label{fig:size}
 \end{figure}
@@ -652,7 +652,7 @@ size\_stepメソッドは，「スプライト名.size\_step」で変化量を�
 
 \begin{figure}[H]
   \centering
-  \includegraphics[height=15mm]{images/size_step.pdf}
+  \includegraphics[height=10mm]{images/size_step.pdf}
   \caption{「大きさを〜ずつ変える」ブロック}
   \label{fig:size_step}
 \end{figure}
@@ -669,8 +669,8 @@ showメソッドは，「スプライト名.show」に真偽値を与えるこ�
 
 \begin{figure}[H]
   \centering
-  \includegraphics[height=15mm]{images/show.pdf} 
-  \includegraphics[height=15mm]{images/hide.pdf}
+  \includegraphics[height=10mm]{images/show.pdf} 
+  \includegraphics[height=10mm]{images/hide.pdf}
   \caption{「表示」「非表示」ブロック}
   \label{fig:show}
 \end{figure}
@@ -693,18 +693,18 @@ KeyEventクラスのインスタンスは，キーが押されたときにキー
 
 \begin{figure}[H]
   \centering
-  \includegraphics[height=15mm]{images/flag.pdf} 
-  \includegraphics[height=15mm]{images/keypress.pdf} \\
-  \includegraphics[height=15mm]{images/click.pdf} 
-  \includegraphics[height=15mm]{images/message.pdf}
+  \includegraphics[height=10mm]{images/flag.pdf} 
+  \includegraphics[height=10mm]{images/keypress.pdf} \\
+  \includegraphics[height=10mm]{images/click.pdf} 
+  \includegraphics[height=10mm]{images/message.pdf}
   \caption{「〜されたとき」ブロック}
   \label{fig:then}
 \end{figure}
 
 \begin{figure}[H]
   \centering
-  \includegraphics[height=15mm]{images/send.pdf} 
-  \includegraphics[height=15mm]{images/send2.pdf} 
+  \includegraphics[height=10mm]{images/send.pdf} 
+  \includegraphics[height=10mm]{images/send2.pdf} 
   \caption{「〜送る」「〜を送って待つ」ブロック}
   \label{fig:send}
 \end{figure}
@@ -715,7 +715,7 @@ ClickEvent.new -> click;
 MessageEvent.new -> mes;
 { click = "flag" }.if {
   cat.say "こんにちは!";
-  終了 |> mes;
+  "終了" |> mes;
 };
 \end{lstlisting}
 
@@ -728,8 +728,8 @@ waitメソッドは，「スプライト名.wait」で指定した時間分の�
 
 \begin{figure}[H]
   \centering
-  \includegraphics[height=15mm]{images/wait.pdf} \\
-  \includegraphics[height=15mm]{images/stop.pdf} 
+  \includegraphics[height=10mm]{images/wait.pdf} \\
+  \includegraphics[height=10mm]{images/stop.pdf} 
   \caption{「〜秒待つ」「〜を止める」ブロック}
   \label{fig:wait}
 \end{figure}
@@ -822,7 +822,7 @@ Scratchにおける「調べる」に関連するブロックと本言語にお�
 touchメソッドでは，接触したかの判定をしたい要素をtouchメソッドに与えることで，その結果を真偽値で返す．プログラム\ref{code32}にtouchメソッドのプログラム例を示す．
 \begin{figure}[H]
   \centering
-  \includegraphics[height=15mm]{images/touch.pdf}
+  \includegraphics[height=10mm]{images/touch.pdf}
   \caption{「〜に触れた」ブロック}
   \label{fig:touch}
 \end{figure}
@@ -840,7 +840,7 @@ length\_betweenメソッドでは，二つのスプライト間の距離を数�
 
 \begin{figure}[H]
   \centering
-  \includegraphics[height=15mm]{images/mouse.pdf}
+  \includegraphics[height=10mm]{images/mouse.pdf}
   \caption{「〜までの距離」ブロック}
   \label{fig:length}
 \end{figure}
@@ -858,8 +858,8 @@ mouse\_xメソッドは，マウスのx座標の値を呼び出す．mouse\_yメ
 
 \begin{figure}[H]
   \centering
-  \includegraphics[height=15mm]{images/mouse_x.pdf} 
-  \includegraphics[height=15mm]{images/mouse_y.pdf} 
+  \includegraphics[height=10mm]{images/mouse_x.pdf} 
+  \includegraphics[height=10mm]{images/mouse_y.pdf} 
   \caption{「マウスの座標」ブロック}
   \label{fig:length}
 \end{figure}
@@ -876,11 +876,11 @@ Scratchにおける「調べる」に関連するブロックと本言語にお�
 
 \begin{figure}[H]
   \centering
-  \includegraphics[height=15mm]{images/add.pdf}
-  \includegraphics[height=15mm]{images/sub.pdf} \\
-  \includegraphics[height=15mm]{images/mul.pdf}
-  \includegraphics[height=15mm]{images/div.pdf} \\
-  \includegraphics[height=15mm]{images/rem.pdf}
+  \includegraphics[height=10mm]{images/add.pdf}
+  \includegraphics[height=10mm]{images/sub.pdf} \\
+  \includegraphics[height=10mm]{images/mul.pdf}
+  \includegraphics[height=10mm]{images/div.pdf} \\
+  \includegraphics[height=10mm]{images/rem.pdf}
   \caption{「算術演算」ブロック}
   \label{fig:math}
 \end{figure}
@@ -890,9 +890,9 @@ Scratchにおける「調べる」に関連するブロックと本言語にお�
 
 \begin{figure}[H]
   \centering
-  \includegraphics[height=15mm]{images/over.pdf}
-  \includegraphics[height=15mm]{images/less.pdf}
-  \includegraphics[height=15mm]{images/equ.pdf}
+  \includegraphics[height=10mm]{images/over.pdf}
+  \includegraphics[height=10mm]{images/less.pdf}
+  \includegraphics[height=10mm]{images/equ.pdf}
   \caption{「比較演算」ブロック}
   \label{fig:com}
 \end{figure}
@@ -902,8 +902,8 @@ Scratchにおける「調べる」に関連するブロックと本言語にお�
 
 \begin{figure}[H]
   \centering
-  \includegraphics[height=15mm]{images/and.pdf}
-  \includegraphics[height=15mm]{images/or.pdf}
+  \includegraphics[height=10mm]{images/and.pdf}
+  \includegraphics[height=10mm]{images/or.pdf}
   \caption{「比較演算」ブロック}
   \label{fig:log}
 \end{figure}
@@ -915,7 +915,7 @@ Scratchにおける「調べる」に関連するブロックと本言語にお�
 
 \begin{figure}[H]
   \centering
-  \includegraphics[height=15mm]{images/random.pdf}
+  \includegraphics[height=10mm]{images/random.pdf}
   \caption{「〜から〜までの乱数」ブロック}
   \label{fig:log}
 \end{figure}
@@ -927,7 +927,98 @@ rand -> num;
 \clearpage
 
 \section{サンプルプログラム}
-コンセプトの示したように，本言語では，Scratchにおけるスプライトやステージの概念を参考にしている．そのため，本言語の言語仕様をまとめるにあたって，Scratchのサンプルプログラムをもとに本言語のサンプルプログラムの作成を行った．先行研究では，イベント処理の記述方法に関しては定まっていなかったが，本研究では，サンプルプログラムの作成の過程で，JavaScriptのPromiseを参考にした記述方法が定まった．以下に作成したサンプルプログラムを示す．
+コンセプトの示したように，本言語では，Scratchにおけるスプライトやステージの概念を参考にしている．そのため，Scratchの機能を本言語へ移植するため，Scratchのサンプルプログラムをもとに本言語のサンプルプログラムの作成を行った．サンプルプログラムの作成の過程で，JavaScriptのPromiseを参考にしたイベント処理の記述方法が定まった．以下に作成したサンプルプログラムを示す．
+
+\subsection{回転する}
+図\ref{fig:sample06}およびプログラム\ref{sample06}に，Scratchのサンプルプログラムおよび本言語のサンプルプログラムを示す．このプログラムは，スプライトが36度回転を10回繰り返すことで360度回転を行う．
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.5]{images/sample06.pdf}
+  \caption{Scratchのサンプルプログラム「回転する」}
+  \label{fig:sample06}
+\end{figure}
+
+\begin{lstlisting}[caption=本言語のサンプルプログラム「回転する」, label=sample06]
+ClickEvent.new -> click;
+Splite.new name:"ねこ" -> cat;
+
+{ click="flag" }.if { 
+  cat.turn 90;
+  126 -> degree;
+  { 1~10 }.each () => {
+    cat.turn degree;
+    degree + 36 -> degree;
+  };
+};
+\end{lstlisting}
+
+\subsection{ジャンプする}
+図\ref{fig:sample04}およびプログラム\ref{sample04}に，Scratchのサンプルプログラムおよび本言語のサンプルプログラムを示す．このプログラムは，スプライトのy座標が変化することにより，ジャンプしているような移動処理を行なっている．
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.3]{images/sample04.pdf}
+  \caption{Scratchのサンプルプログラム「ジャンプする」}
+  \label{fig:sample04}
+\end{figure}
+
+\begin{lstlisting}[caption=本言語のサンプルプログラム「ジャンプする」, label=sample04]
+ClickEvent.new -> click;
+Splite.new name:"ねこ" -> cat;
+
+15 -> distance;
+{ click="flag" }.if { 
+  { distance > -16 }.while {
+    cat.move_step y:distance;
+    distance - 1 -> distance;
+  };
+};
+\end{lstlisting}
+
+\subsection{跳ね返るボール}
+図\ref{fig:sample05}およびプログラム\ref{sample05}に，Scratchのサンプルプログラムおよび本言語のサンプルプログラムを示す．このプログラムは，「ボール」が「パドル」に接触したときと外周に接触したときに跳ね返り，向いている方向へ進み続ける．プログラム\ref{sample05}では，degreeメソッドとして向きの値を呼び出すメソッドを利用している．しかし，degreeは中学英語の範囲外であるため，検討する必要がある．
+
+\begin{figure}[H]
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[keepaspectratio, scale=0.3]{images/sample05-1.pdf}
+    \subcaption{「ボール」のプログラム}
+  \end{minipage}
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[keepaspectratio, scale=0.3]{images/sample05-2.pdf}
+    \subcaption{「パドル」のプログラム}
+  \end{minipage}
+  \caption{Scratchのサンプルプログラム「跳ね返るボール」}
+  \label{fig:sample05}
+\end{figure}
+
+\begin{lstlisting}[caption=本言語のサンプルプログラム「跳ね返るボール」, label=sample05]
+ClickEvent.new -> click;
+KeyEvent.new -> key;
+Stage.new -> stage;
+Splite.new name:"ボール" -> ball;
+Splite.new name:"パドル",y:-117 -> paddle;
+
+{ click="flag" }.if {
+  ball.turn 45;
+  true.while {
+    ball.walk 10;
+    { ball.touch paddle }.if {
+      180 - ball.degree -> ball_deg;
+      ball.turn ball_deg;
+    };
+    ball.return;
+    { key="rightarrow" }.if {
+      paddle.move_step x:20;
+    };
+    { key="leftarrow" }.if {
+      paddle.move_step x:-20;
+    };
+  };
+};
+\end{lstlisting}
 
 \subsection{ランダムな位置に出現させる}
 図\ref{fig:sample01}およびプログラム\ref{sample01}に，Scratchのサンプルプログラムおよび本言語のサンプルプログラムを示す．このプログラムは，旗を押すたびにスプライトのx座標とy座標がランダムに変化するため，スプライトをランダムな位置に出現させる処理を行っている．
@@ -956,12 +1047,12 @@ Splite.new name:"cat" -> cat;
 \begin{figure}[H]
   \begin{minipage}[b]{0.5\linewidth}
     \centering
-    \includegraphics[keepaspectratio, scale=0.5]{images/sample03-1.pdf}
+    \includegraphics[keepaspectratio, scale=0.4]{images/sample03-1.pdf}
     \subcaption{「ねこ」のプログラム}
   \end{minipage}
   \begin{minipage}[b]{0.5\linewidth}
     \centering
-    \includegraphics[keepaspectratio, scale=0.5]{images/sample03-2.pdf}
+    \includegraphics[keepaspectratio, scale=0.4]{images/sample03-2.pdf}
     \subcaption{「ボール」のプログラム}
   \end{minipage}
   \caption{Scratchのサンプルプログラム「弾を発射する」}
@@ -1064,6 +1155,7 @@ Splite.new name:"くま", x:78, y:-68 -> bear;
   bear.say "気持ちいい";
 };
 \end{lstlisting}
+\clearpage
 
 \section{結言}
 %背景
@@ -1079,7 +1171,8 @@ Splite.new name:"くま", x:78, y:-68 -> bear;
 しかし，先行研究の問題点として，開発するプログラミング言語の言語仕様はまとまりきっておらず，インタープリタのパーサーが正しく動作しないなどがある．
 
 %目的
-そこで本研究では，Scratchを学んだ学習者が，次の段階として抵抗感を減らすことを目的としたテキストプログラミング言語「Chiba-lang」のコンセプトを定め，サンプルプログラムと言語仕様の作成を行った．
+そこで本研究では，Scratchを学んだ学習者が，次の段階として抵抗感を減らすことを目的としたテキストプログラミング言語「Chiba-lang」のコンセプトを定め，Scratchの機能を移植したサンプルプログラムと言語仕様の作成を行った．
+結果として，先行研究では定まっていなかったイベント処理の記述方法が決まり，スプライトの動作を想定した言語仕様をまとめた．
 
 %今後
 今後は，本研究でまとめられた言語仕様より，インタープリタや実行環境の開発を進めていく．
@@ -1087,17 +1180,18 @@ Splite.new name:"くま", x:78, y:-68 -> bear;
 
 \section{謝辞}
 本論文の作成にあたり、多くの方々にご指導ご鞭撻を賜りました。
-須田浩准教授や須田研究室の仲間には，多大なる御指導及び御助言を頂きました．深く感謝申し上げます．
+須田宇宙准教授や須田研究室の仲間には，多大なる御指導及び御助言を頂きました．深く感謝申し上げます．
 \clearpage
 
 \begin{thebibliography}{99}
 \bibitem{senkou1} 内掘美幸: ``Scratchからの移行を考慮したプログラミング言語と環境の開発'', 2019年度卒業研究
 \bibitem{senkou2} 菅原直輝: ``Scratchからの移行を考慮したプログラミング言語の開発'', 2020年度卒業研究
 \bibitem{pdf1} 文部科学省，``小学校プログラミング教育の手引（第三版）'', (2020),\url{https://www.mext.go.jp/content/20200218-mxt_jogai02-100003171_002.pdf}
-\bibitem{cite1} 文部科学省，``小学校を中心としたプログラミング教育ポータル'', \url{https://www.mext.go.jp/content/20200218-mxt_jogai02-100003171_002.pdf},2022/8/23 参照
+\bibitem{cite1} 文部科学省，``小学校を中心としたプログラミング教育ポータル'', \url{https://miraino-manabi.mext.go.jp/},2022/8/23 参照
 \bibitem{cite2} 京都産業大学，``Smalltalk Syntax'', \url{http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/VisualWorks/SmalltalkSyntax/index-j.html},2019/8/21
 \bibitem{cite3} MDN contributors, ``Promise'',\url{https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Promise},2022/10/4, 2022/12/7 参照
-\bibitem{cite4} まつもとゆきひろ,``オブジェクト指向スクリプト言語 Ruby リファレンスマニュアル'',\url{https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Promise},2022/12/21 参照
+\bibitem{cite4} まつもとゆきひろ,``オブジェクト指向スクリプト言語 Ruby リファレンスマニュアル'',
+\url{https://docs.ruby-lang.org/ja/latest/doc/index.html},2022/12/21 参照
 \bibitem{cite5} Scratch Foundation, ``Scratch'',\url{https://scratch.mit.edu/},2023/1/3 参照
 \end{thebibliography}
 
